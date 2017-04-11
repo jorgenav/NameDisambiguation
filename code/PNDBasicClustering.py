@@ -46,7 +46,7 @@ def TF(document, unique_terms, collection):
     return word_tf
 
 if __name__ == "__main__":
-    folder = "Thomas_Baker"
+    folder = "../data"
     # Empty list to hold text documents.
     texts = []
 

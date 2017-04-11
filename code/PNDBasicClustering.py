@@ -123,4 +123,3 @@ if __name__ == "__main__":
 
     # Evaluation
     print("rand_score: ", adjusted_rand_score(reference, test))
-

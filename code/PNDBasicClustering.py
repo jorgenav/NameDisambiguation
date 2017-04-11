@@ -39,7 +39,6 @@ def cluster_texts(texts, clustersNumber, distanceFunction):
     # clusters = clusterer.cluster(vectors, True)
     clusterer = AgglomerativeClustering(n_clusters=clustersNumber, linkage="average", affinity=distanceFunction)
     clusters = clusterer.fit_predict(vectors)
-    print(clusters)
 
     return clusters
 
@@ -55,7 +54,6 @@ def TF(document, unique_terms, collection):
     return word_tf
 
 if __name__ == "__main__":
-    # folder = "Thomas_Baker"
     folder = "../data"
     # Empty list to hold text documents.
     texts = []
@@ -77,7 +75,7 @@ if __name__ == "__main__":
             # for word in tokens:
             #     if word.lower() not in stop:
             #         tokens_nostop.append(word)
-            # text = nltk.Text(tokens_nostop)
+            # # text = nltk.Text(tokens_nostop)
 
 ########################################################################################################################
 
@@ -98,9 +96,8 @@ if __name__ == "__main__":
             # wordnet_lemmatizer = WordNetLemmatizer()
             # lemmatizeds = []
             # nlemmas = []
-            #
-            # # for token in tokens:
-            # for token in tokens_nostop:
+            # for token in tokens:
+            # # for token in tokens_nostop:
             #     lemmatized = wordnet_lemmatizer.lemmatize(token)
             #     lemmatizeds.append(lemmatized)
             # text = nltk.Text(lemmatizeds)
@@ -117,7 +114,7 @@ if __name__ == "__main__":
 
     distanceFunction ="cosine"
     # distanceFunction = "euclidean"
-    test = cluster_texts(texts,4,distanceFunction)
+    test = cluster_texts(texts, 4, distanceFunction)
     print("test:      ", test)
     # Gold Standard
     reference = [0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 2, 0, 3, 3, 0, 1, 2, 0, 1]

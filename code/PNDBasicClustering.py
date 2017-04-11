@@ -1,9 +1,16 @@
 import re, pprint, os, numpy
 import nltk
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
+
 from sklearn.metrics.cluster import *
 from sklearn.cluster import AgglomerativeClustering
 from nltk.cluster import GAAClusterer
 from sklearn.metrics.cluster import adjusted_rand_score
+
+
 
 def read_file(file):
     myfile = open(file,"r")
@@ -24,7 +31,7 @@ def cluster_texts(texts, clustersNumber, distance):
     print("Unique terms found: ", len(unique_terms))
 
     ### And here we actually call the function and create our array of vectors.
-    vectors = [numpy.array(TF(f,unique_terms, collection)) for f in texts]
+    vectors = [numpy.array(TF(f, unique_terms, collection)) for f in texts]
     print("Vectors created.")
 
     # initialize the clusterer
@@ -46,9 +53,11 @@ def TF(document, unique_terms, collection):
     return word_tf
 
 if __name__ == "__main__":
-    folder = "Thomas_Baker"
+    # folder = "Thomas_Baker"
+    folder = "../data"
     # Empty list to hold text documents.
     texts = []
+    stop = set(stopwords.words('english'))
 
     listing = os.listdir(folder)
     for file in listing:
@@ -58,6 +67,46 @@ if __name__ == "__main__":
             raw = f.read()
             f.close()
             tokens = nltk.word_tokenize(raw)
+
+########################################################################################################################
+
+            # Stop words
+            tokens_nostop = []
+            for word in tokens:
+                if word.lower() not in stop:
+                    tokens_nostop.append(word)
+            # text = nltk.Text(tokens_nostop)
+
+########################################################################################################################
+
+            # Steamming
+            stemmer = PorterStemmer()
+            stemmeds = []
+            # Para cada token del texto obtenemos su raíz.
+            for token in tokens:
+            # for token in tokens_nostop:
+                stemmed = stemmer.stem(token)
+                stemmeds.append(stemmed)
+            text = nltk.Text(stemmeds)
+
+########################################################################################################################
+
+            # # Lemmatization
+            # # Seleccionamos el lematizador.
+            # wordnet_lemmatizer = WordNetLemmatizer()
+            # lemmatizeds = []
+            # nlemmas = []
+            #
+            # for token in tokens:
+            # # for token in tokens_nostop:
+            #     lemmatized = wordnet_lemmatizer.lemmatize(token)
+            #     lemmatizeds.append(lemmatized)
+            # text = nltk.Text(lemmatizeds)
+            # # print(text)
+
+########################################################################################################################
+
+
             text = nltk.Text(tokens)
             texts.append(text)
 
@@ -65,7 +114,7 @@ if __name__ == "__main__":
     print("They can be accessed using texts[0] - texts[" + str(len(texts)-1) + "]")
 
     distanceFunction ="cosine"
-    #distanceFunction = "euclidean"
+    # distanceFunction = "euclidean"
     test = cluster_texts(texts,4,distanceFunction)
     print("test: ", test)
     # Gold Standard

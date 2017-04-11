@@ -21,7 +21,7 @@ def read_file(file):
     myfile.close
     return data
 
-def cluster_texts(texts, clustersNumber, distance):
+def cluster_texts(texts, clustersNumber, distanceFunction):
     #Load the list of texts into a TextCollection object.
     collection = nltk.TextCollection(texts)
     print("Created a collection of", len(collection), "terms.")
@@ -35,11 +35,11 @@ def cluster_texts(texts, clustersNumber, distance):
     print("Vectors created.")
 
     # initialize the clusterer
-    clusterer = GAAClusterer(clustersNumber)
-    clusters = clusterer.cluster(vectors, True)
-    #clusterer = AgglomerativeClustering(n_clusters=clustersNumber,
-    #                                  linkage="average", affinity=distanceFunction)
-    #clusters = clusterer.fit_predict(vectors)
+    # clusterer = GAAClusterer(clustersNumber)
+    # clusters = clusterer.cluster(vectors, True)
+    clusterer = AgglomerativeClustering(n_clusters=clustersNumber, linkage="average", affinity=distanceFunction)
+    clusters = clusterer.fit_predict(vectors)
+    print(clusters)
 
     return clusters
 
@@ -49,7 +49,9 @@ def cluster_texts(texts, clustersNumber, distance):
 def TF(document, unique_terms, collection):
     word_tf = []
     for word in unique_terms:
-        word_tf.append(collection.tf(word, document))
+        # word_tf.append(collection.tf(word, document))
+        # word_tf.append(collection.idf(word))
+        word_tf.append(collection.tf_idf(word, document))
     return word_tf
 
 if __name__ == "__main__":
@@ -70,24 +72,24 @@ if __name__ == "__main__":
 
 ########################################################################################################################
 
-            # Stop words
-            tokens_nostop = []
-            for word in tokens:
-                if word.lower() not in stop:
-                    tokens_nostop.append(word)
+            # # Stop words
+            # tokens_nostop = []
+            # for word in tokens:
+            #     if word.lower() not in stop:
+            #         tokens_nostop.append(word)
             # text = nltk.Text(tokens_nostop)
 
 ########################################################################################################################
 
-            # Steamming
-            stemmer = PorterStemmer()
-            stemmeds = []
-            # Para cada token del texto obtenemos su raíz.
-            for token in tokens:
-            # for token in tokens_nostop:
-                stemmed = stemmer.stem(token)
-                stemmeds.append(stemmed)
-            text = nltk.Text(stemmeds)
+            # # Steamming
+            # stemmer = PorterStemmer()
+            # stemmeds = []
+            # # Para cada token del texto obtenemos su raíz.
+            # for token in tokens:
+            # # for token in tokens_nostop:
+            #     stemmed = stemmer.stem(token)
+            #     stemmeds.append(stemmed)
+            # text = nltk.Text(stemmeds)
 
 ########################################################################################################################
 
@@ -97,8 +99,8 @@ if __name__ == "__main__":
             # lemmatizeds = []
             # nlemmas = []
             #
-            # for token in tokens:
-            # # for token in tokens_nostop:
+            # # for token in tokens:
+            # for token in tokens_nostop:
             #     lemmatized = wordnet_lemmatizer.lemmatize(token)
             #     lemmatizeds.append(lemmatized)
             # text = nltk.Text(lemmatizeds)
@@ -116,11 +118,12 @@ if __name__ == "__main__":
     distanceFunction ="cosine"
     # distanceFunction = "euclidean"
     test = cluster_texts(texts,4,distanceFunction)
-    print("test: ", test)
+    print("test:      ", test)
     # Gold Standard
-    reference =[0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 2, 0, 3, 3, 0, 1, 2, 0, 1]
-    print("reference: ", reference)
+    reference = [0, 1, 2, 0, 0, 0, 3, 0, 0, 0, 2, 0, 3, 3, 0, 1, 2, 0, 1]
+    reference_str = '[0 1 2 0 0 0 3 0 0 0 2 0 3 3 0 1 2 0 1]'
+    print("reference: ", reference_str)
 
     # Evaluation
-    print("rand_score: ", adjusted_rand_score(reference,test))
+    print("rand_score: ", adjusted_rand_score(reference, test))
 

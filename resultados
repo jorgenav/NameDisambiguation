@@ -1,0 +1,80 @@
+CON TF:
+	- Nada: -0.026024723487312985
+		Created a collection of 22301 terms.
+		Unique terms found:  4874
+	- stopwords: -0.00542740841248301
+		Created a collection of 18608 terms.
+		Unique terms found:  4851
+	- lemmatize: -0.026024723487312985
+		Created a collection of 22301 terms.
+		Unique terms found:  4723
+	- stemmize: -0.026024723487312985
+		Created a collection of 22301 terms.
+		Unique terms found:  3633
+	- stopwords + lemmatize: -0.00542740841248301
+		Created a collection of 18608 terms.
+		Unique terms found:  4700
+	- stopwords + stemmize: -0.026024723487312985
+		Created a collection of 18608 terms.
+		Unique terms found:  3624
+	- lemmatize + stemmize: -0.026024723487312985
+		Created a collection of 22301 terms.
+		Unique terms found:  3636
+	- stopwords + lemmatize + stemmize: -0.026024723487312985
+		Created a collection of 18608 terms.
+		Unique terms found:  3627
+CON IDF:
+	- Nada: 0.06323687031082535
+		Created a collection of 22301 terms.
+		Unique terms found:  4874
+	- stopwords: 0.06323687031082535
+		Created a collection of 18608 terms.
+		Unique terms found:  4851
+	- lemmatize: 0.06323687031082535
+		Created a collection of 22301 terms.
+		Unique terms found:  4723
+	- stemmize: 0.06323687031082535
+		Created a collection of 22301 terms.
+		Unique terms found:  3633
+	- stopwords + lemmatize: 0.06323687031082535
+		Created a collection of 18608 terms.
+		Unique terms found:  4700
+	- stopwords + stemmize: 0.06323687031082535
+		Created a collection of 18608 terms.
+		Unique terms found:  3624
+	- lemmatize + stemmize: 0.06323687031082535
+		Created a collection of 22301 terms.
+		Unique terms found:  3636
+	- stopwords + lemmatize + stemmize: 0.06323687031082535
+		Created a collection of 18608 terms.
+		Unique terms found:  3627
+	Se obtiene el mismo resultado en todas las combinaciones, porque en la linea del código donde se calcula esta medida no depende del documento.
+
+
+CON TF-IDF:
+	- Nada: 0.011312217194570151
+		Created a collection of 22301 terms.
+		Unique terms found:  4874
+	- stopwords: 0.08228980322003578
+		Created a collection of 18608 terms.
+		Unique terms found:  4851
+	- lemmatize: 0.10494931425163982
+		Created a collection of 22301 terms.
+		Unique terms found:  4723
+	- stemmize: 0.02666666666666667
+		Created a collection of 22301 terms.
+		Unique terms found:  3633
+	- stopwords + lemmatize: -0.03545633617859491
+		Created a collection of 18608 terms.
+		Unique terms found:  4700
+	- stopwords + stemmize: 0.002726653033401485
+		Created a collection of 18608 terms.
+		Unique terms found:  3624
+	- lemmatize + stemmize: 0.02666666666666667
+		Created a collection of 22301 terms.
+		Unique terms found:  3636
+	- stopwords + lemmatize + stemmize: 0.002726653033401485
+		Created a collection of 18608 terms.
+		Unique terms found:  3627
+
+

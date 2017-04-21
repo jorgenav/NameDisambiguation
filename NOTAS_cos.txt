@@ -230,7 +230,18 @@ reference:  [0 1 2 0 0 0 3 0 0 0 2 0 3 3 0 1 2 0 1]
 rand_score:  0.4675014907573047
 
 
-17 - Eliminando Stopwords, Lemmatizando, Stemmizando y Entities
+17 - Lemmatizando, Stemmizando y Entities
+
+
+Created a collection of 19016 terms.
+Unique terms found:  4077
+Vectors created.
+test:       [0 0 3 0 0 0 2 0 1 0 3 0 1 2 0 0 0 0 0]
+reference:  [0 1 2 0 0 0 3 0 0 0 2 0 3 3 0 1 2 0 1]
+rand_score:  0.3678593848085374
+
+
+18 - Eliminando Stopwords, Lemmatizando, Stemmizando y Entities
 
 
 Prepared  19  documents...

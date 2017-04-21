@@ -127,7 +127,8 @@ def lemmatize(words, ent=False):
 java_path = "/bin/java"
 os.environ["JAVA_HOME"] = java_path
 
-stanford_dir = "/home/jkobe/Development/Stanford/stanford-ner-2016-10-31/"
+# stanford_dir = "/home/jkobe/Development/Stanford/stanford-ner-2016-10-31/"
+stanford_dir = "/home/mountain/desarrollo/nltk-stanford/stanford-ner-2016-10-31/"
 jarfile = stanford_dir + "stanford-ner.jar"
 modelfile = stanford_dir + "classifiers/english.muc.7class.distsim.crf.ser.gz"
 
@@ -160,11 +161,10 @@ if __name__ == "__main__":
             # Tokenize text and remove punctuation
             tokenizer = RegexpTokenizer(r'\w+')
             tokens = tokenizer.tokenize(raw)
-            # tokens = entities(tokens)
-            tokens = remove_stop_words(tokens, ent=False)
-            # tokens = lemmatize(tokens, ent=False)
-            # tokens = stemmize(tokens, ent=False)
-            print("TTTTTTTTTTT: ",tokens)
+            tokens = entities(tokens)
+            # tokens = remove_stop_words(tokens, ent=False)
+            tokens = lemmatize(tokens, ent=True)
+            tokens = stemmize(tokens, ent=True)
             text = nltk.Text(tokens)
 
             # print("text: ", text)
@@ -175,8 +175,6 @@ if __name__ == "__main__":
 
     distanceFunction ="cosine"
     # distanceFunction = "euclidean"
-    for t in texts:
-        print(t)
     test = cluster_texts(texts, 4, distanceFunction)
     print("test:      ", test)
     # Gold Standard

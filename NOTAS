@@ -1,0 +1,69 @@
+
+RESULTADO BASE: Aportado de inicio por Soto
+
+
+
+
+
+RESULTADO BASE: Para distancia coseno, medida tf_idf y corregida errata en código
+
+
+
+
+
+1 - Con distancia euclídea
+
+
+
+
+2 - Con distancia coseno y eliminando stopwords
+
+
+
+
+3 - Con distancia euclídea y eliminando stopwords
+
+
+
+
+4 - Con distancia coseno, eliminando stopwords y aplicando steamming
+
+
+
+
+5 - Con distancia euclídea, eliminando stopwords y aplicando steamming
+
+
+
+
+6 - Con distancia coseno y aplicando steamming
+
+
+
+
+7 - Con distancia euclídea y aplicando steamming
+
+
+
+
+8 - Con distancia coseno, eliminando stopwords y aplicando lematización
+
+
+
+
+9 - Con distancia euclídea, eliminando stopwords y aplicando lematización
+
+
+
+
+10 - Con distancia coseno y aplicando lematización
+
+
+
+
+11 - Con distancia euclídea y aplicando lematización
+
+
+
+
+14 - 

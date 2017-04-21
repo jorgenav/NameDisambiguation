@@ -51,9 +51,9 @@ def cluster_texts(texts, clustersNumber, distanceFunction):
 def TF(document, unique_terms, collection):
     word_tf = []
     for word in unique_terms:
-        word_tf.append(collection.tf(word, document))
+        # word_tf.append(collection.tf(word, document))
         # word_tf.append(collection.idf(word))
-        # word_tf.append(collection.tf_idf(word, document))
+        word_tf.append(collection.tf_idf(word, document))
     return word_tf
 
 ########################################################################################################################
@@ -75,7 +75,7 @@ def remove_stop_words(words, ent = False):
     return words
 
 ########################################################################################################################
-            # Function to stemmize the tokens
+# Function to stemmize the tokens
 
 def stemmize(words, ent=False):
     stemmized = []
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     lemmatizer = WordNetLemmatizer()
 
     listing = os.listdir(folder)
-    for file in listing:
+    for file in sorted(listing):
         if file.endswith(".txt"):
             url = folder+"/"+file
             f = open(url,encoding="latin-1");
@@ -160,10 +160,10 @@ if __name__ == "__main__":
             # Tokenize text and remove punctuation
             tokenizer = RegexpTokenizer(r'\w+')
             tokens = tokenizer.tokenize(raw)
-            tokens = entities(tokens)
-            tokens = remove_stop_words(tokens, ent=True)
-            tokens = lemmatize(tokens, ent=True)
-            tokens = stemmize(tokens, ent=True)
+            # tokens = entities(tokens)
+            tokens = remove_stop_words(tokens, ent=False)
+            # tokens = lemmatize(tokens, ent=False)
+            # tokens = stemmize(tokens, ent=False)
             print("TTTTTTTTTTT: ",tokens)
             text = nltk.Text(tokens)
 

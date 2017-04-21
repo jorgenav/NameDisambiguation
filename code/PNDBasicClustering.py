@@ -60,7 +60,7 @@ if __name__ == "__main__":
     stop = set(stopwords.words('english'))
 
     listing = os.listdir(folder)
-    for file in listing:
+    for file in sorted(listing):
         if file.endswith(".txt"):
             url = folder+"/"+file
             f = open(url,encoding="latin-1");
@@ -70,12 +70,12 @@ if __name__ == "__main__":
 
 ########################################################################################################################
 
-            # # Stop words
-            # tokens_nostop = []
-            # for word in tokens:
-            #     if word.lower() not in stop:
-            #         tokens_nostop.append(word)
-            # # text = nltk.Text(tokens_nostop)
+            # Stop words
+            tokens_nostop = []
+            for word in tokens:
+                if word.lower() not in stop:
+                    tokens_nostop.append(word)
+            text = nltk.Text(tokens_nostop)
 
 ########################################################################################################################
 
@@ -106,7 +106,7 @@ if __name__ == "__main__":
 ########################################################################################################################
 
 
-            text = nltk.Text(tokens)
+            # text = nltk.Text(tokens)
             texts.append(text)
 
     print("Prepared ", len(texts), " documents...")

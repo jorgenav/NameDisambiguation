@@ -1,8 +1,6 @@
 import re, pprint, os, numpy
 import nltk
 from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
 
 from sklearn.metrics.cluster import *
@@ -61,17 +59,17 @@ def TF(document, unique_terms, collection):
 def remove_stop_words(words, ent = False):
     stop_words = set(stopwords.words('english'))
     for word in words:
-        if ent:
-            # changing manually some entities
-            if word[0].lower() in ["baker", "roy", "thomas"]:
-                lst = list(word)
-                lst[1] = 'PERSON'
-                word = tuple(lst)
-            if word[0] in stop_words:
-                words.remove(word)
-        else:
-            if word in stop_words:
-                words.remove(word)
+            if ent:
+                if len(re.findall('^#?[a-zA-Z0-9]*', word[0])[0]) > 0:
+                    if word[0] in stop_words:
+                        words.remove(word)
+            else:
+                if len(re.findall('^#?[a-zA-Z0-9]*', word[0])[0]) > 0:
+                    if word in stop_words:
+                        words.remove(word)
+                else:
+                    if word in stop_words:
+                        words.remove(word)
     return words
 
 ########################################################################################################################
@@ -80,22 +78,12 @@ def remove_stop_words(words, ent = False):
 def stemmize(words, ent=False):
     stemmized = []
     for word in words:
-        if ent:
-            # changing manually some entities
-            if word[0].lower() in ["baker", "roy", "thomas"]:
-                lst = list(word)
-                lst[1] = 'PERSON'
-                word = tuple(lst)
-
-            if word[0].lower() not in ["baker", "roy", "thomas"]:
-                stemmized.append((stemmer.stem(word[0]),word[1]))
+            if ent:
+                if len(re.findall('^#?[a-zA-Z0-9]*', word[0])[0]) > 0:
+                        stemmized.append((stemmer.stem(word[0]),word[1]))
             else:
-                stemmized.append(word)
-        else:
-            if word.lower() not in ["baker", "roy", "thomas"]:
-                stemmized.append(stemmer.stem(word))
-            else:
-                stemmized.append(word)
+                if len(re.findall('^#?[a-zA-Z0-9]*', word[0])[0]) > 0:
+                    stemmized.append(stemmer.stem(word))
     return stemmized
 
 ########################################################################################################################
@@ -104,20 +92,11 @@ def lemmatize(words, ent=False):
     lemmatized = []
     for word in words:
         if ent:
-            # changing manually some entities
-            if word[0].lower() in ["baker", "roy", "thomas"]:
-                lst = list(word)
-                lst[1] = 'PERSON'
-                word = tuple(lst)
-            if word[0].lower() not in ["baker", "roy", "thomas"]:
-                lemmatized.append((lemmatizer.lemmatize(word[0]),word[1]))
-            else:
-                lemmatized.append(word)
+            if len(re.findall('^#?[a-zA-Z0-9]*', word[0])[0]) > 0:
+                    lemmatized.append((lemmatizer.lemmatize(word[0]),word[1]))
         else:
-            if word.lower not in ["baker", "roy", "thomas"]:
-                lemmatized.append(lemmatizer.lemmatize(word))
-            else:
-                lemmatized.append(word)
+            if len(re.findall('^#?[a-zA-Z0-9]*', word[0])[0]) > 0:
+                    lemmatized.append(word)
     return lemmatized
 
 ########################################################################################################################
@@ -137,7 +116,17 @@ st = StanfordNERTagger(modelfile,jarfile)
 stanford_dir = st._stanford_jar[0].rpartition("/")[0]
 
 def entities(sentence):
-    return(st.tag(sentence)) # creo que si le metes una lista de palabras detecta peor las entidades
+    tagged_sentence = st.tag(sentence)
+    tagged_sentence_new = []
+    for tagsen in tagged_sentence:
+        if tagsen[0].lower() in ["baker", "roy", "thomas"]:
+            lst = list(tagsen)
+            lst[1] = 'PERSON'
+            tagsen = tuple(lst)
+        tagged_sentence_new.append(tagsen)
+        if len(re.findall('^#?[a-zA-Z0-9]*', tagsen[0])[0]) == 0:
+            tagged_sentence.remove(tagsen)
+    return(tagged_sentence_new)
 
 ########################################################################################################################
 
@@ -159,15 +148,16 @@ if __name__ == "__main__":
             raw = f.read()
             f.close()
             # Tokenize text and remove punctuation
+            # tokens = nltk.word_tokenize(raw)
             tokenizer = RegexpTokenizer(r'\w+')
             tokens = tokenizer.tokenize(raw)
-            tokens = entities(tokens)
-            # tokens = remove_stop_words(tokens, ent=False)
-            tokens = lemmatize(tokens, ent=True)
-            tokens = stemmize(tokens, ent=True)
+
+            # tokens = entities(tokens)
+            # tokens = remove_stop_words(tokens, ent=True)
+            # tokens = lemmatize(tokens, ent=False)
+            tokens = stemmize(tokens, ent=False)
             text = nltk.Text(tokens)
 
-            # print("text: ", text)
             texts.append(text)
 
     print("Prepared ", len(texts), " documents...")

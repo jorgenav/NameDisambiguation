@@ -106,8 +106,7 @@ def lemmatize(words, ent=False):
 java_path = "/bin/java"
 os.environ["JAVA_HOME"] = java_path
 
-# stanford_dir = "/home/jkobe/Development/Stanford/stanford-ner-2016-10-31/"
-stanford_dir = "/home/mountain/desarrollo/nltk-stanford/stanford-ner-2016-10-31/"
+stanford_dir = "PATH_TO_STANFORD_NER/stanford-ner-2016-10-31/"
 jarfile = stanford_dir + "stanford-ner.jar"
 modelfile = stanford_dir + "classifiers/english.muc.7class.distsim.crf.ser.gz"
 
